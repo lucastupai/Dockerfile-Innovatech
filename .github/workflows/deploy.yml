@@ -1,23 +1,4 @@
-name: Deploy InnovaTech
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # Build Backend
+# Build Backend
       - name: Build Backend
         uses: docker/build-push-action@v4
         with:
@@ -27,10 +8,10 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend-innovatech:latest
 
       # Build Frontend
-      - name: Build Fronted
+      - name: Build Frontend
         uses: docker/build-push-action@v4
         with:
-          context: ./Fronted
+          context: ./Fronted # <--- Asegúrate que diga Fronted (como tu carpeta)
           file: ./Fronted/Dockerfile.frontend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-innovatech:latest
