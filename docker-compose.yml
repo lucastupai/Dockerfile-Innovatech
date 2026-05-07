@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-
+  # Servicio de Python (Backend)
   backend:
-    build: ./Backend
-  fronted:
-    build: ./Frontend
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile.backend
     ports:
       - "8000:8000"
     volumes:
@@ -13,8 +13,22 @@ services:
     networks:
       - web_net
       - db_net
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
 
-  # Base de Datos 
+  # Servicio de Node/Nginx (Frontend)
+  frontend:
+    build: 
+      context: ./Fronted
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    networks:
+      - web_net
+
+  # Base de Datos (PostgreSQL)
   db:
     image: postgres:15-alpine
     environment:
@@ -26,12 +40,10 @@ services:
     networks:
       - db_net
 
-
 networks:
   web_net:
   db_net:
- 
 
 volumes:
   backend_data: 
-  db_data: 
+  db_data:
