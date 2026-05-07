@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # python-backend
+  backend:
+    build: . 
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_data:/app/data 
+    networks:
+      - innovatech_net
+
+  # Base de Datos 
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: innovatech
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    networks:
+      - innovatech_net
+
+networks:
+  innovatech_net:
+    driver: bridge
+
+volumes:
+  backend_data: 
