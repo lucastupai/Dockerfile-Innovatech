@@ -1,9 +1,11 @@
 version: '3.8'
 
 services:
-  # python-backend
+
   backend:
-    build: . 
+    build: ./Backend
+  fronted:
+    build: ./Frontend
     ports:
       - "8000:8000"
     volumes:
