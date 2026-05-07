@@ -1,4 +1,13 @@
-steps:
+name: Deploy InnovaTech
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -8,20 +17,20 @@ steps:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Construir y subir el Backend
-      - name: Build and push Backend
+      # Build Backend
+      - name: Build Backend
         uses: docker/build-push-action@v4
         with:
           context: ./Backend
           file: ./Backend/Dockerfile.backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/innovatech-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend-innovatech:latest
 
-      # Construir y subir el Frontend
-      - name: Build and push Frontend
+      # Build Frontend
+      - name: Build Frontend
         uses: docker/build-push-action@v4
         with:
           context: ./Fronted
           file: ./Fronted/Dockerfile.frontend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/innovatech-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-innovatech:latest
