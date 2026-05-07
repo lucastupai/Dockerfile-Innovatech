@@ -8,10 +8,20 @@ steps:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # Construir y subir el Backend
       - name: Build and push Backend
         uses: docker/build-push-action@v4
         with:
           context: ./Backend
-          file: ./Backend/Dockerfile.backend # Ruta actualizada
+          file: ./Backend/Dockerfile.backend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/innovatech-backend:latest
+
+      # Construir y subir el Frontend
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./Fronted
+          file: ./Fronted/Dockerfile.frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/innovatech-frontend:latest
