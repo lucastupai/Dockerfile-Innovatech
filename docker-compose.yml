@@ -24,12 +24,12 @@ services:
     networks:
       - db_net
 
-# --- DEFINICIÓN DE RECURSOS ---
+
 networks:
   web_net:
   db_net:
-  # Eliminamos innovatech_net porque ya no la usamos arriba
+ 
 
 volumes:
   backend_data: 
-  db_data: # <--- ¡IMPORTANTE! Te faltaba declarar este para la base de datos
+  db_data: 
