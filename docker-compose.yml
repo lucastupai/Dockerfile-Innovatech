@@ -9,23 +9,27 @@ services:
     volumes:
       - backend_data:/app/data 
     networks:
-      - innovatech_net
+      - web_net
+      - db_net
 
   # Base de Datos 
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: innovatech
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data 
     networks:
-      - innovatech_net
+      - db_net
 
+# --- DEFINICIÓN DE RECURSOS ---
 networks:
-  innovatech_net:
-    driver: bridge
+  web_net:
+  db_net:
+  # Eliminamos innovatech_net porque ya no la usamos arriba
 
 volumes:
   backend_data: 
+  db_data: # <--- ¡IMPORTANTE! Te faltaba declarar este para la base de datos
