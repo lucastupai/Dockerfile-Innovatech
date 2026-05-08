@@ -28,7 +28,7 @@ jobs:
       - name: Build Frontend
         uses: docker/build-push-action@v4
         with:
-          context: ./Fronted
+          context: ./Fronted # <--- Mantengo "Fronted" porque así se llama tu carpeta en el rar
           file: ./Fronted/Dockerfile.frontend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-innovatech:latest
